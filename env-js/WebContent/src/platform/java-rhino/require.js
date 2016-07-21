@@ -4,7 +4,7 @@ var __this__ = this;
 (function(){
 var require = (function() {
     var cached = {};
-    var currentPath = java.lang.System.getProperty('user.dir');
+    var currentPath = java.lang.System.getProperty('user.dir')+"/WebContent/";
     var se = __currentScriptEngine__;
     var paths = [currentPath];
     
@@ -64,7 +64,7 @@ var require = (function() {
             var source = read(url.openConnection());
             source = source.replace(/^\#\!.*/, '');
             source = (
-                    "(function (require, exports, module) { \n " + source + "\n});");
+                    "(function (require, exports, module) {  " + source + "\n});");
             cached[id] = {
                 exports: {},
                 module: {
@@ -112,7 +112,7 @@ require('envjs/platform/rhino');
 require('envjs/window');
 })()
 var __argv__ = arguments;
-print(Envjs.jsbeauty);
+//print(Window);
 //__currentScriptEngine__.put("Window", Window);
 //print(__currentScriptEngine__);
 

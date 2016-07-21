@@ -21,7 +21,7 @@
             location="."
             description="Base"/>
     <property name= "SRC_DIR"
-            location="src"
+            location="WebContent/src"
             description="Source Folder"/>
     <property name="TOOLS_DIR"
             location="tools"
@@ -30,7 +30,7 @@
             location="rhino/js.jar"
             description="Rhino JS Engine"/>
     <property name="PREFIX"
-            location="${basedir}/envjs/"
+            location="${basedir}/WebContent/envjs/"
             description="Target parent folder for built files"   />
     <property name="DOCS_DIR"
             location="${PREFIX}/docs"

@@ -8,6 +8,16 @@ Envjs.once('tick', function(){
         debug('XMLHttpRequest.Core available');    
 });
 
+
+Envjs.resolve = function(base, path) {
+ 
+    var newurl = urlparse.resolve(base,path);
+    //console.log('uri %s %s = %s', base, path, newurl);
+    return newurl;
+};
+
+
+
 /**
  * getcwd - named after posix call of same name (see 'man 2 getcwd')
  *

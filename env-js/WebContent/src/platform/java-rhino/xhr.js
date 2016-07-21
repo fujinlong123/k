@@ -3,6 +3,10 @@
 
 var log = Envjs.logger('Envjs.XMLHttpRequest.Rhino');
 
+
+
+
+
 /**
  * Get 'Current Working Directory'
  */
@@ -119,12 +123,9 @@ Envjs.connection = function(xhr, responseHandler, data){
         //write data to output stream if required
 		//TODO: if they have set the request header for a chunked
 		//request body, implement a chunked output stream
-        if(xhr.method!='GET'){
-        	throw new Exception("只支持get请求");
-        }
         var objectResponse;
-        if(data){
-        	
+        if(data&&xhr.method!='GET'){
+        	log.error("暂不支持 121232123131232");
             if(data instanceof Document){
                 if ( xhr.method == "PUT" || xhr.method == "POST" ) {
                     connection.setDoOutput(true);
@@ -146,7 +147,7 @@ Envjs.connection = function(xhr, responseHandler, data){
             connection.connect();
         }else{
         	
-        	objectResponse=__httpUtils__.get(url,__httpClientContext__);
+        	objectResponse=__httpUtils__.get(url,Envjs.__httpClientContext__);
             //connection.connect();
         }
     }

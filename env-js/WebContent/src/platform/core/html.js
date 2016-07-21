@@ -76,7 +76,7 @@ Envjs.loadLocalScript = function(script){
         brief = script.src||script.text.substring(0,64);
 
     log.debug("loading script type %s : %s", script.type, brief);
-
+   
     if(script.type){
         types = script.type.split(";");
         for(i=0;i<types.length;i++){
@@ -97,6 +97,7 @@ Envjs.loadLocalScript = function(script){
     try{
     	var scripttext="";
         if(!script.src.length ){
+        	 print("行内js:\n"+script.outerHTML);
             if(Envjs.scriptTypes[""]){
                 log.debug('handling inline scripts %s %s', script.src, Envjs.scriptTypes[""] );
                 scripttext=Envjs.js_beautify(script.text);
@@ -110,6 +111,7 @@ Envjs.loadLocalScript = function(script){
     }catch(e){
     	log.error("Error loading script. %s", e);
     	e.printStackTrace();
+    	print("出错元素:\n"+script.outerHTML);
     	print("出错js:\n"+scripttext);
     	
       
@@ -154,6 +156,7 @@ Envjs.loadLocalScript = function(script){
     } catch(ee) {
     	log.error("could not load script %s \n %s", filename, ee );
     	ee.printStackTrace();
+    	print("出错元素:\n"+script.outerHTML);
     	print("出错js:\n"+scripttext);
     	
        

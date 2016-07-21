@@ -140,7 +140,7 @@ Envjs.defaultEventBehaviors = {
             method = target.method?target.method.toUpperCase():"GET";
             
             action = Envjs.uri(
-                target.action !== ""?target.action:target.ownerDocument.baseURI,
+            		target.action || '',
                 target.ownerDocument.baseURI
             );
             if(method=='GET' && !action.match(/^file:/)){

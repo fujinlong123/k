@@ -505,7 +505,11 @@ __extend__(HTMLDocument.prototype, {
     },
     get innerHTML(){
         return this.documentElement.outerHTML;
+    },
+    get defaultView(){
+    	return this.ownerWindow;
     }
+    
 });
 
 }(/*HTMLDocument*/));

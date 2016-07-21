@@ -302,6 +302,7 @@ exports.Location = Location = function(url, doc, history) {
                     try{
                         xhr.send(data, false);//dont parse html
                     }catch(e){
+                    	e.printStackTrace();
                         log.debug('failed to load content %s', e);
                         Envjs.exchangeHTMLDocument(
                             $document, 

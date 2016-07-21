@@ -1,6 +1,9 @@
 package jjjjjjj;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -13,10 +16,10 @@ import javax.script.SimpleScriptContext;
 import jdk.nashorn.api.scripting.NashornScriptEngine;
 
 public class compile1 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		ScriptEngineManager sem = new ScriptEngineManager();
 		System.out.println(java.lang.System.getProperty("user.dir"));
-
+		String userDir=java.lang.System.getProperty("user.dir");
 		NashornScriptEngine se = (NashornScriptEngine) sem.getEngineByName("js");
 
 		NashornScriptEngine se1 = (NashornScriptEngine) sem.getEngineByName("js");
@@ -39,7 +42,8 @@ public class compile1 {
 			 * engine.eval("print(foo)", myCtx); // prints "world"
 			 * engine.eval("print(foo)", defCtx); // prints "hello"
 			 */
-			CompiledScript c = se.compile("load('envjs/rhino.js')");
+			FileReader fr=new FileReader(new File(userDir+"/WebContent/envjs/rhino.js"));
+			CompiledScript c = se.compile(fr);
 /*
 			ScriptContext s = new SimpleScriptContext();
 			s.setAttribute("__currentScriptEngine__", se, ScriptContext.ENGINE_SCOPE);
@@ -47,16 +51,20 @@ public class compile1 {
 			//se.eval("load('nashorn:mozilla_compat.js');", s);
 			//se.eval("new f(this)", s);
 
-			/*ScriptContext s1 = new SimpleScriptContext();
-			s1.setAttribute("__currentScriptEngine__", se, ScriptContext.ENGINE_SCOPE);
-			c.eval(s1);*/
+			//ScriptContext s1 = new SimpleScriptContext();
+			//s1.setAttribute("__currentScriptEngine__", se, ScriptContext.ENGINE_SCOPE);
+			//long s=System.currentTimeMillis();
+			//c.eval(s1);
+			//System.out.println(System.currentTimeMillis()-s);
 			//se.eval("load('nashorn:mozilla_compat.js');", s1);
 			//se.eval("new f(this)", s1);
 			
 			
 			ScriptContext s2 = new SimpleScriptContext();
 			s2.setAttribute("__currentScriptEngine__", se, ScriptContext.ENGINE_SCOPE);
+			long ss1=System.currentTimeMillis();
 			c.eval(s2);
+			System.out.println(System.currentTimeMillis()-ss1);
 			se.eval("new Window(this)",s2);
 			new Thread(new Runnable() {
 				
@@ -64,6 +72,7 @@ public class compile1 {
 				public void run() {
 					try {
 						se.eval("Envjs.eventLoop();",s2);
+						
 					} catch (ScriptException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -72,7 +81,8 @@ public class compile1 {
 				}
 			}).start();
 			se.eval("location='https://www.baidu.com'",s2);
-			
+			//se.eval("location='http://127.0.0.1:8480/test/ff.jsp'",s2);
+		
 			BufferedReader strin = new BufferedReader(new InputStreamReader(System.in));
 			
 			while (true) {

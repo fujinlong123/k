@@ -1066,7 +1066,7 @@ Envjs.defaultEventBehaviors = {
             method = target.method?target.method.toUpperCase():"GET";
             
             action = Envjs.uri(
-                target.action !== ""?target.action:target.ownerDocument.baseURI,
+            		target.action || '',
                 target.ownerDocument.baseURI
             );
             if(method=='GET' && !action.match(/^file:/)){
@@ -1202,7 +1202,7 @@ Envjs.loadLocalScript = function(script){
         brief = script.src||script.text.substring(0,64);
 
     log.debug("loading script type %s : %s", script.type, brief);
-
+   
     if(script.type){
         types = script.type.split(";");
         for(i=0;i<types.length;i++){
@@ -1223,6 +1223,7 @@ Envjs.loadLocalScript = function(script){
     try{
     	var scripttext="";
         if(!script.src.length ){
+        	 print("行内js:\n"+script.outerHTML);
             if(Envjs.scriptTypes[""]){
                 log.debug('handling inline scripts %s %s', script.src, Envjs.scriptTypes[""] );
                 scripttext=Envjs.js_beautify(script.text);
@@ -1236,6 +1237,7 @@ Envjs.loadLocalScript = function(script){
     }catch(e){
     	log.error("Error loading script. %s", e);
     	e.printStackTrace();
+    	print("出错元素:\n"+script.outerHTML);
     	print("出错js:\n"+scripttext);
     	
       
@@ -1280,6 +1282,7 @@ Envjs.loadLocalScript = function(script){
     } catch(ee) {
     	log.error("could not load script %s \n %s", filename, ee );
     	ee.printStackTrace();
+    	print("出错元素:\n"+script.outerHTML);
     	print("出错js:\n"+scripttext);
     	
        
@@ -2512,6 +2515,12 @@ Envjs.wait = Envjs.wait||function(wait) {};
 
 var urlparse = {};
 
+
+urlparse.resolve=function(base,url){
+	var baseUri=new java.net.URI(base);
+	return baseUri.resolve(url).toString();
+}
+
 // Unlike to be useful standalone
 //
 // NORMALIZE PATH with "../" and "./"
@@ -2694,7 +2703,7 @@ urlparse.urljoin = function(base, url, allow_fragments)
     }
 
     var url_parts = urlparse.urlsplit(url);
-
+   
     // if url parts has a scheme (i.e. absolute)
     // then nothing to do
     if (url_parts.scheme) {
@@ -2761,6 +2770,16 @@ Envjs.once('tick', function(){
     log = Envjs.logger('Envjs.XMLHttpRequest.Core').
         debug('XMLHttpRequest.Core available');    
 });
+
+
+Envjs.resolve = function(base, path) {
+ 
+    var newurl = urlparse.resolve(base,path);
+    //console.log('uri %s %s = %s', base, path, newurl);
+    return newurl;
+};
+
+
 
 /**
  * getcwd - named after posix call of same name (see 'man 2 getcwd')

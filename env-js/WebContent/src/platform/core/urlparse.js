@@ -87,6 +87,12 @@
 
 var urlparse = {};
 
+
+urlparse.resolve=function(base,url){
+	var baseUri=new java.net.URI(base);
+	return baseUri.resolve(url).toString();
+}
+
 // Unlike to be useful standalone
 //
 // NORMALIZE PATH with "../" and "./"
@@ -269,7 +275,7 @@ urlparse.urljoin = function(base, url, allow_fragments)
     }
 
     var url_parts = urlparse.urlsplit(url);
-
+   
     // if url parts has a scheme (i.e. absolute)
     // then nothing to do
     if (url_parts.scheme) {
